@@ -1,0 +1,54 @@
+{% extends "new.html" %}
+{% block title%}
+<title>Don't Binge on {{name}}</title>
+{% endblock %}
+{% block scripts %}
+<script>
+	function getDuration(value1,value2,value3){
+		if (value1 > 0){
+				$.getJSON($SCRIPT_ROOT + '/getDuration',
+				{number : value1,
+				duration : value2,
+				episodes : value3},
+				function(data) {
+					document.getElementById("numEps").innerHTML=data.number_of_episodes;
+					document.getElementById("done_in").innerHTML=data.done_in;
+					document.getElementById("unitPlural").innerHTML=data.unit;
+					//TODO: make this return singular (remove 's')
+					document.getElementById("unitSingular").innerHTML=data.unit.slice(0,-1);
+	 		 });
+			
+		}else{
+			//pass if nothing
+		}
+	};
+	//Event listeners
+	$(document).ready(function(){
+				$('#duration').keyup(function(){
+		        	getDuration($("#duration").val(),$("#time").val(),{{numEps}});
+		    	});
+		    	$('#duration').change(function(){
+		        	getDuration($("#duration").val(),$("#time").val(),{{numEps}});
+		    	});
+		    	$('#time').change(function(){
+		    		getDuration($("#duration").val(),$("#time").val(),{{numEps}});
+		    	});
+			});
+</script>
+{% endblock %}
+{% block body %}
+<h1>Don't Binge on {{name}}</h1>
+<h2>{{name}} has {{numEps}} episodes {% if numSeasons > 1 %} across {{numSeasons}} seasons{% endif %}</h2>
+<h2>I want to finish it
+	<form>
+		<input id="duration" type="number" value="2" min="1">
+		<select id="time">
+		    <option value="days">Days</option>
+		    <option value="weeks" selected>Weeks</option>
+		    <option value="months">Months</option>
+		    <option value="years">Years</option>
+  		</select>
+	</form>
+ from now</h2>
+<h2>Watch <span id="numEps"> </span> episodes per <span id="unitSingular"> </span> and be done in <span id="done_in"> </span> <span id="unitPlural"> </span></h2>
+{% endblock %}

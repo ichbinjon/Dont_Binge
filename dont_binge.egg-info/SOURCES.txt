@@ -1,0 +1,6 @@
+dont_binge/__init__.py
+dont_binge.egg-info/PKG-INFO
+dont_binge.egg-info/SOURCES.txt
+dont_binge.egg-info/dependency_links.txt
+dont_binge.egg-info/requires.txt
+dont_binge.egg-info/top_level.txt
