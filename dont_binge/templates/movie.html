@@ -37,18 +37,19 @@
 </script>
 {% endblock %}
 {% block body %}
-<h1>Don't Binge on {{name}}</h1>
-<h2>{{name}} has {{numEps}} episodes {% if numSeasons > 1 %} across {{numSeasons}} seasons{% endif %}</h2>
-<h2>I want to finish it
-	<form>
-		<input id="duration" type="number" value="2" min="1">
-		<select id="time">
-		    <option value="days">Days</option>
-		    <option value="weeks" selected>Weeks</option>
-		    <option value="months">Months</option>
-		    <option value="years">Years</option>
-  		</select>
-	</form>
- from now</h2>
-<h2>Watch <span id="numEps"> </span> episodes per <span id="unitSingular"> </span> and be done in <span id="done_in"> </span> <span id="unitPlural"> </span></h2>
+<div class ="container centered" align = "center">
+	<h1>Don't Binge on {{name}}</h1>
+	<h2>{{name}} has {{numEps}} episodes {% if numSeasons > 1 %} across {{numSeasons}} seasons{% endif %}</h2>
+	<h2>I want to finish it in </h2>
+		<form>
+			<input id="duration" type="number" value="2" min="1">
+			<select id="time">
+			    <option value="days">Days</option>
+			    <option value="weeks" selected>Weeks</option>
+			    <option value="months">Months</option>
+			    <option value="years">Years</option>
+	  		</select>
+		</form>
+	<h2>Watch <span id="numEps"> </span> episodes per <span id="unitSingular"> </span> and be done in <span id="done_in"> </span> <span id="unitPlural"> </span></h2>
+</div>
 {% endblock %}

@@ -30,12 +30,19 @@ def getDuration():
 	eps = int(request.args['episodes'])
 
 	if unit == 'days':
-		number_of_episodes = math.ceil((float(eps) / float(mynumber)))
-		done_in = math.ceil((float(eps) / float(number_of_episodes)))
+		calc = calc_duration(eps,mynumber)
+		number_of_episodes = math.ceil(calc[0])
+		done_in = math.ceil(calc[1])
+		#if number_of_episodes == 1:
+		#	mynumber = mynumber / 7 #converting to weeks
+		#	number_of_episodes = math.ceil((float(eps) / float(mynumber)))
+		#	done_in = math.ceil((float(eps) / float(number_of_episodes)))
+		#	unit = 'weeks'
 
 	elif unit == 'weeks':
-		number_of_episodes = math.ceil((float(eps) / float(mynumber)))
-		done_in = math.ceil((float(eps) / float(number_of_episodes)))
+		calc = calc_duration(eps,mynumber*7)
+		number_of_episodes = math.ceil(calc[0])
+		done_in = math.ceil(calc[1]) / 7
 
 	elif unit == 'months':
 		number_of_episodes = math.ceil((float(eps) / float(mynumber)))
@@ -47,6 +54,12 @@ def getDuration():
 	else:
 		pass
 	return jsonify(number_of_episodes = number_of_episodes, done_in=done_in, unit=unit)
+
+def calc_duration(num_eps, days):
+	number_of_episodes = (float(num_eps) / float(days))
+	done_in = (num_eps / math.ceil(number_of_episodes))
+	return (number_of_episodes,done_in)
+
 
 @app.route('/getShowInfo')
 def getShowInfo():

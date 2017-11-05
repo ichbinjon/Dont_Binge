@@ -47,8 +47,11 @@
 						var title = "";
 						var id = "";
 						var html = "";
-
-		      			for(count=0; count<5; count++){
+						var max = 7;
+						if (data.results.length < 7){
+							max = data.results.length;
+						}
+		      			for(count=0; count<max; count++){
 							title = data.results[count].name + ' ';
 							id = data.results[count].id;
 							html = makeHTML(title,id);
@@ -87,10 +90,10 @@
 	  <div class="collapse navbar-collapse" id="navbarSupportedContent">
 	    <ul class="navbar-nav mr-auto">
 	      <li class="nav-item active">
-	        <a class="nav-link" href="#">by Jonathan Mendoza <span class="sr-only">(current)</span></a>
+	        <a class="nav-link" href="https://www.jmendoza.me" target="_blank">by Jonathan Mendoza <span class="sr-only">(current)</span></a>
 	      </li>
 	      <li class="nav-item">
-	        <a class="nav-link" href="#">About</a>
+	        <a class="nav-link" href="https://github.com/ichbinjon/Dont_Binge" target="_blank">About</a>
 	      </li>
 	      <li class="nav-item">
 	        <a class="nav-link disabled" href="#">Free Cookies</a>
@@ -100,9 +103,11 @@
 </nav>
 	
 	{% block body %}
-	<div class ="container centered" align = "center">
+	<div class ="container" align="center">
 		<h1>Which show should you definitely not binge?</h1>
-		<input id="searchbox" name="mysearchvalue" type="text">
+		<form>
+			<input id="searchbox" type="text">
+		</form>
 		<div id="main">Search for your show</div>
 	</div>
 	{% endblock %}
