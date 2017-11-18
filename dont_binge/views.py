@@ -8,26 +8,28 @@ from dont_binge import app
 
 @app.route('/')
 def hello_new():
-    apiKey = "6d64a72486b47e66eaf157cafc5a0860"
+    apiKey = os.environ.get('PORTAL_API')
     data = requests.get('https://api.themoviedb.org/3/discover/movie?api_key=\
     ' + apiKey + '&language=en-US&sort_by=popularity.desc&include_adult=false&in\
     clude_video=false&page=1')
     data = data.json()
     return render_template('index.html', data=data)
 
+
 @app.route('/dont_binge')
 def dont_binge():
-    apiKey = "6d64a72486b47e66eaf157cafc5a0860"
+    apiKey = os.environ.get('PORTAL_API')
     data = requests.get('https://api.themoviedb.org/3/discover/movie?api_key=\
     ' + apiKey + '&language=en-US&sort_by=popularity.desc&include_adult=false&in\
     clude_video=false&page=1')
     data = data.json()
     return render_template('new.html', data=data)
 
+
 @app.route('/search')
 def search():
     text = request.args['searchText']
-    apiKey = "6d64a72486b47e66eaf157cafc5a0860"
+    apiKey = os.environ.get['PORTAL_API']
     info = {'api_key': apiKey, 'query': text, 'language': 'en-US'}
     data = requests.get(' https://api.themoviedb.org/3/search/tv', params=info)
     data = data.json()
@@ -97,7 +99,7 @@ def getShowInfo():
 
 @app.route('/tv/<string:movieID>')
 def TV(movieID):
-    apiKey = "6d64a72486b47e66eaf157cafc5a0860"
+    apiKey = os.environ.get('PORTAL_API')
     info = {'api_key': apiKey, 'language': 'en-US'}
     data = requests.get(' https://api.themoviedb.org/3/tv/' + movieID,
                         params=info)
@@ -107,19 +109,24 @@ def TV(movieID):
     numSeasons = data["number_of_seasons"]
     return render_template('movie.html', data=data, numSeasons=numSeasons,
                            numEps=numEps, name=name)
+
+
 @app.route('/get_an_A')
 def get_an_A():
     return render_template('get_A.html')
 
-@app.route('/grade', methods=['GET','POST'])
+
+@app.route('/grade', methods=['GET', 'POST'])
 def grade():
     grade_overall = float(request.args.get('grade_overall'))
     grade_sofar = float(request.args.get('grade_sofar'))
     grade_exam_worth = float(request.args.get('grade_exam_worth'))
 
-    #how much more % someone needs
+    # how much more % someone needs
     percent_needed = grade_overall - grade_sofar
     final_calc = (percent_needed * 100.0) / grade_exam_worth
 
-    return render_template('get_A_calculated.html', final=math.ceil(final_calc), arg1=grade_overall, arg2=grade_sofar, arg3=grade_exam_worth)
-
+    return render_template('get_A_calculated.html',
+                           final=math.ceil(final_calc),
+                           arg1=grade_overall, arg2=grade_sofar,
+                           arg3=grade_exam_worth)
