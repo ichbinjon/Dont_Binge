@@ -31,7 +31,7 @@ def search():
     text = request.args['searchText']
     apiKey = os.environ.get('PORTAL_API')
     info = {'api_key': apiKey, 'query': text, 'language': 'en-US'}
-    data = requests.get(' https://api.themoviedb.org/3/search/tv', params=info)
+    data = requests.get('https://api.themoviedb.org/3/search/tv', params=info)
     data = data.json()
     # data = jsonify(result=1+2)
     return jsonify(data)
