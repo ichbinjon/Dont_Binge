@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+	{% block title %}
+	<title>Calculated Procrastination</title>
+	{% endblock %}
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+
+	<!-- stylesheets-->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto" rel="stylesheet">
+	<link rel="stylesheet" href="../static/style.css"/>
+
+
+	<script type="text/javascript">
+	  var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+	</script>
+	{% block scripts %}
+	<script type=text/javascript>
+
+		// function calc_grade(value){
+
+		// 	if (value!="" && value.length>1){
+		// 			$.getJSON($SCRIPT_ROOT + '/search',
+		// 			{searchText : value},
+		// 			function(data) {
+
+		// 				var titleList="";
+		// 				var title = "";
+		// 				var id = "";
+		// 				var html = "";
+		// 				var max = 7;
+		// 				if (data.results.length < 7){
+		// 					max = data.results.length;
+		// 				}
+		//       			for(count=0; count<max; count++){
+		// 					title = data.results[count].name + ' ';
+		// 					id = data.results[count].id;
+		// 					html = makeHTML(title,id);
+		// 					titleList = titleList + html;
+		// 				}
+		// 			document.getElementById("main").innerHTML=titleList;
+	 //     		 });
+				
+		// 	}else{
+		// 		document.getElementById("main").innerHTML="";
+		// 	}
+		// }
+		// function makeHTML(title,id){
+		// 	var html="";
+		// 	html="<a href='/tv/"+id+"'>" + title + "</a> <br/>";
+		// 	return html;
+		// }
+
+		// $(document).ready(function(){
+		// 	$('#my_form').submit(function(){
+	 //        mySearch($("#searchbox").val());
+	 //    });
+		// });
+	</script>
+	{% endblock %}
+</head>
+<body>
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+	<a class="navbar-brand" href="/">Calculated Procrastination</a>
+	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+	    <span class="navbar-toggler-icon"></span>
+	  </button>
+
+	  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+	    <ul class="navbar-nav mr-auto">
+	      <li class="nav-item">
+	        <a class="nav-link" href="/dont_binge">Don't Binge Watch</a>
+	      </li>
+	      <li class="nav-item">
+	        <a class="nav-link" href="/get_an_A">Get that A</a>
+	      </li>
+	    </ul>
+	  </div>
+</nav>
+	
+	{% block body %}
+	<div class ="container" align="center">
+		<h1>Let's help you get that A</h1>
+		<h3>Overall percentage you're aiming for:</h3>
+		<form class="my_form" action="/grade" method="GET">
+			<input name="grade_overall" type="number" min="0" max="100" value={{arg1}}>
+			<h3>% You already have going into the exams</h3>
+			<input name="grade_sofar" type="number" min="0" max="100" value={{arg2}}>
+			<h3>% Your final exam is worth</h3>
+			<input name="grade_exam_worth" type="number" min="0" max="100" value={{arg3}}><br/><br/>
+			<input type="submit" value="Calculate">
+		</form><br/>
+		<div id="main"><h3>You need to score at least {{final}}% in your exam.</h3>
+		<h4>Good Luck!</h4></div>
+	</div>
+	{% endblock %}
+</body>
