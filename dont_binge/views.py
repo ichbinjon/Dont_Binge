@@ -101,7 +101,7 @@ def getShowInfo():
 def TV(movieID):
     apiKey = os.environ.get('PORTAL_API')
     info = {'api_key': apiKey, 'language': 'en-US'}
-    data = requests.get(' https://api.themoviedb.org/3/tv/' + movieID,
+    data = requests.get('https://api.themoviedb.org/3/tv/' + movieID,
                         params=info)
     data = data.json()
     name = data["name"]
